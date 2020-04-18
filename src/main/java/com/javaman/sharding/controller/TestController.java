@@ -23,9 +23,8 @@ public class TestController {
     }
 
     @GetMapping("/my")
-    public void test0() {
-        Goods0 goods0 = goods0Dao.selectByPrimaryKey(1L);
-        System.out.println(goods0);
+    public Goods0 test0() {
+        return goods0Dao.selectByPrimaryKey(1L);
     }
 
 }
