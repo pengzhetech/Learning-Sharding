@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author 
  */
 @Data
-public class Goods0 implements Serializable {
+public class Goods implements Serializable {
     private Long goodsId;
 
     private String goodsName;

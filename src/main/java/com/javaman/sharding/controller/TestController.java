@@ -1,10 +1,12 @@
 package com.javaman.sharding.controller;
 
-import com.javaman.sharding.mapper.Goods0Dao;
-import com.javaman.sharding.pojo.Goods0;
+import com.javaman.sharding.mapper.GoodsDao;
+import com.javaman.sharding.pojo.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author pengzhe
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    private Goods0Dao goods0Dao;
+    private GoodsDao goods0Dao;
 
     @GetMapping("/test")
     public String test() {
@@ -23,8 +25,13 @@ public class TestController {
     }
 
     @GetMapping("/my")
-    public Goods0 test0() {
+    public Goods test0() {
         return goods0Dao.selectByPrimaryKey(1L);
+    }
+
+    @GetMapping("/all")
+    public List<Goods> selectAll() {
+        return goods0Dao.selectAll();
     }
 
 }
