@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * @author pengzhe
@@ -20,7 +21,7 @@ import java.util.Map;
 public class TestController {
 
     @Autowired
-    private GoodsDao goods0Dao;
+    private GoodsDao goodsDao;
 
     @GetMapping("/test")
     public String test() {
@@ -29,12 +30,12 @@ public class TestController {
 
     @GetMapping("/my")
     public Goods test0() {
-        return goods0Dao.selectByPrimaryKey(1L);
+        return goodsDao.selectByPrimaryKey(1L);
     }
 
     @GetMapping("/all")
     public List<Goods> selectAll() {
-        return goods0Dao.selectAll();
+        return goodsDao.selectAll();
     }
 
     @GetMapping("/between")
@@ -42,7 +43,7 @@ public class TestController {
         Map<String, Long> param = new HashMap<>();
         param.put("begin", 10L);
         param.put("end", 20L);
-        return goods0Dao.selectBetween(param);
+        return goodsDao.selectBetween(param);
     }
 
     @GetMapping("/in")
@@ -53,8 +54,28 @@ public class TestController {
         param.add(12L);
         param.add(13L);
         param.add(30L);
-        return goods0Dao.selectIn(param);
+        return goodsDao.selectIn(param);
     }
 
+    @GetMapping("/batchInsert")
+    public int batchInsert() {
+        List<Goods> goods = new ArrayList<>();
+        IntStream.rangeClosed(1, 2).forEach(index -> {
+            Goods good = new Goods();
+            good.setGoodsName("goodName" + index);
+            good.setGoodsType(Long.valueOf(String.valueOf(index)));
+            goods.add(good);
+        });
+        return goodsDao.batchInsert(goods);
+    }
+
+    @GetMapping("/insert")
+    public int insert() {
+        Goods good = new Goods();
+        good.setGoodsType(10L);
+        good.setGoodsName("testInsert");
+        return goodsDao.insert(good);
+        // return goodsDao.insert(good);
+    }
 }
 

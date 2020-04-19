@@ -6,25 +6,30 @@
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
         <result column="goods_type" jdbcType="BIGINT" property="goodsType"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         goods_id, goods_name, goods_type
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from goods
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from goods
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </delete>
+
     <insert id="insert" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.javaman.sharding.pojo.Goods"
             useGeneratedKeys="true">
         insert into goods (goods_name, goods_type)
         values (#{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=BIGINT})
     </insert>
+
     <insert id="insertSelective" keyColumn="goods_id" keyProperty="goodsId"
             parameterType="com.javaman.sharding.pojo.Goods" useGeneratedKeys="true">
         insert into goods
@@ -45,6 +50,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.javaman.sharding.pojo.Goods">
         update goods
         <set>
@@ -57,12 +63,14 @@
         </set>
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.javaman.sharding.pojo.Goods">
         update goods
         set goods_name = #{goodsName,jdbcType=VARCHAR},
             goods_type = #{goodsType,jdbcType=BIGINT}
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
+
     <select id="selectAll" resultMap="BaseResultMap">
         select *
         from goods
@@ -85,4 +93,16 @@
         </foreach>
         order by goods_id
     </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+      <!--  <selectKey keyProperty="goodsId" keyColumn="goods_id" order="BEFORE"
+                   resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>-->
+        insert into goods (goods_name, goods_type)
+        values
+        <foreach collection="list" item="good" index="index" separator=",">
+            (#{good.goodsName,jdbcType=VARCHAR}, #{good.goodsType,jdbcType=BIGINT})
+        </foreach>
+    </insert>
 </mapper>

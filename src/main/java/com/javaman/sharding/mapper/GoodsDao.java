@@ -23,4 +23,6 @@ public interface GoodsDao {
     List<Goods> selectBetween(Map<String, Long> param);
 
     List<Goods> selectIn(List<Long> param);
+
+    int batchInsert(List<Goods> goods);
 }
