@@ -65,4 +65,8 @@
     <select id="selectAll" resultMap="BaseResultMap">
     select * from goods
   </select>
+
+    <select id="selectBetween" parameterType="map" resultMap="BaseResultMap">
+select * from goods where goods_id between #{begin} and #{end} order by goods_id
+    </select>
 </mapper>

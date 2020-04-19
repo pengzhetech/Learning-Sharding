@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author pengzhe
@@ -32,6 +34,14 @@ public class TestController {
     @GetMapping("/all")
     public List<Goods> selectAll() {
         return goods0Dao.selectAll();
+    }
+
+    @GetMapping("/between")
+    public List<Goods> selectBetween() {
+        Map<String, Long> param = new HashMap<>();
+        param.put("begin", 10L);
+        param.put("end", 20L);
+        return goods0Dao.selectBetween(param);
     }
 
 }
