@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,17 @@ public class TestController {
         param.put("begin", 10L);
         param.put("end", 20L);
         return goods0Dao.selectBetween(param);
+    }
+
+    @GetMapping("/in")
+    public List<Goods> selectIn() {
+        List<Long> param = new ArrayList<>();
+        param.add(10L);
+        param.add(11L);
+        param.add(12L);
+        param.add(13L);
+        param.add(30L);
+        return goods0Dao.selectIn(param);
     }
 
 }

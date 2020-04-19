@@ -21,4 +21,6 @@ public interface GoodsDao {
     List<Goods> selectAll();
 
     List<Goods> selectBetween(Map<String, Long> param);
+
+    List<Goods> selectIn(List<Long> param);
 }
