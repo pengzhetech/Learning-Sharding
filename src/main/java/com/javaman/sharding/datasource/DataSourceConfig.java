@@ -9,6 +9,7 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingS
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrategy;
 import com.dangdang.ddframe.rdb.sharding.keygen.DefaultKeyGenerator;
 import com.dangdang.ddframe.rdb.sharding.keygen.KeyGenerator;
+import com.google.common.collect.Lists;
 import com.javaman.sharding.config.DatabaseShardingAlgorithm;
 import com.javaman.sharding.config.TableShardingAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 
 @Configuration
@@ -56,7 +59,7 @@ public class DataSourceConfig {
 
         //分表设置，大致思想就是将查询虚拟表Goods根据一定规则映射到真实表中去
         TableRule orderTableRule = TableRule.builder("goods")
-                .actualTables(Arrays.asList("goods_0", "goods_1"))
+                .actualTables(actualTables())
                 .dataSourceRule(dataSourceRule)
                 .generateKeyColumn("goods_id", DefaultKeyGenerator.class)
                 .build();
@@ -66,7 +69,7 @@ public class DataSourceConfig {
                 .dataSourceRule(dataSourceRule)
                 .tableRules(Arrays.asList(orderTableRule))
                 .databaseShardingStrategy(new DatabaseShardingStrategy("goods_id", databaseShardingAlgorithm))
-                .tableShardingStrategy(new TableShardingStrategy("goods_type", tableShardingAlgorithm)).build();
+                .tableShardingStrategy(new TableShardingStrategy("goods_id", tableShardingAlgorithm)).build();
         DataSource dataSource = ShardingDataSourceFactory.createDataSource(shardingRule);
         return dataSource;
     }
@@ -75,6 +78,13 @@ public class DataSourceConfig {
     @Bean
     public KeyGenerator keyGenerator() {
         return new DefaultKeyGenerator();
+    }
+
+    private List<String> actualTables() {
+        List<String> actualTables = Lists.newArrayList();
+        String actualTable = "goods_";
+        IntStream.rangeClosed(0, 11).forEach(index -> actualTables.add(actualTable + index));
+        return actualTables;
     }
 
 }

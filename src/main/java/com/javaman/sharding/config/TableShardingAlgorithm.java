@@ -3,25 +3,22 @@ package com.javaman.sharding.config;
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
 import com.google.common.collect.Range;
+import com.javaman.sharding.util.TbUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-/**
- * 这里使用的都是单键分片策略
- * 示例分表策略是：
- * GoodsType为奇数使用goods_1表
- * GoodsType为偶数使用goods_0表
- */
 @Component
 public class TableShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Long> {
 
     @Override
     public String doEqualSharding(final Collection<String> tableNames, final ShardingValue<Long> shardingValue) {
-        for (String each : tableNames) {
-            if (each.endsWith(shardingValue.getValue() % 2 + "")) {
-                return each;
+        String index = TbUtil.getTableNameIndex(String.valueOf(shardingValue.getValue()), 12);
+        for (String tableName : tableNames) {
+            String[] tableIndex = tableName.split("_");
+            if (tableIndex[tableIndex.length - 1].equalsIgnoreCase(index)) {
+                return tableName;
             }
         }
         throw new IllegalArgumentException();

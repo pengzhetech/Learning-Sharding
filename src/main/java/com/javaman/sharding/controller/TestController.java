@@ -3,10 +3,7 @@ package com.javaman.sharding.controller;
 import com.javaman.sharding.mapper.GoodsDao;
 import com.javaman.sharding.pojo.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +80,11 @@ public class TestController {
     @PostMapping("/insertGood")
     public int insertGood(@RequestBody Goods goods) {
         return goodsDao.insert(goods);
+    }
+
+    @GetMapping("/testSelectById/{id}")
+    public Goods testSelectById(@PathVariable String id) {
+        return goodsDao.selectByPrimaryKey(Long.parseLong(id));
     }
 }
 
