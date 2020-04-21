@@ -35,7 +35,7 @@ public class DatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgor
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Long> shardingValue) {
         Long value = shardingValue.getValue();
-        int hashCode = Objects.hashCode(Math.abs(value));
+        int hashCode = Math.abs(Objects.hashCode(Math.abs(value)));
         int index = hashCode % 4;
         switch (index) {
             case 0:

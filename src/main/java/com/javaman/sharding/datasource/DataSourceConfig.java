@@ -58,6 +58,7 @@ public class DataSourceConfig {
         TableRule orderTableRule = TableRule.builder("goods")
                 .actualTables(Arrays.asList("goods_0", "goods_1"))
                 .dataSourceRule(dataSourceRule)
+                .generateKeyColumn("goods_id", DefaultKeyGenerator.class)
                 .build();
 
         //分库分表策略
