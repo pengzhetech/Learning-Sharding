@@ -1,5 +1,5 @@
-CREATE DATABASE database0;
-USE database0;
+CREATE DATABASE database3;
+USE database3;
 DROP TABLE IF EXISTS `goods_0`;
 CREATE TABLE `goods_0` (
   `goods_id` bigint(20) NOT NULL,
@@ -14,8 +14,8 @@ CREATE TABLE `goods_1` (
   `goods_type` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-CREATE DATABASE database1;
-USE database1;
+CREATE DATABASE database4;
+USE database4;
 DROP TABLE IF EXISTS `goods_0`;
 CREATE TABLE `goods_0` (
   `goods_id` bigint(20) NOT NULL,

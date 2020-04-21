@@ -27,13 +27,14 @@ public class DataSourceConfig {
 
     @Autowired
     private Database0Config database0Config;
-
     @Autowired
     private Database1Config database1Config;
-
+    @Autowired
+    private Database3Config database3Config;
+    @Autowired
+    private Database4Config database4Config;
     @Autowired
     private DatabaseShardingAlgorithm databaseShardingAlgorithm;
-
     @Autowired
     private TableShardingAlgorithm tableShardingAlgorithm;
 
@@ -44,10 +45,12 @@ public class DataSourceConfig {
 
     private DataSource buildDataSource() throws SQLException {
         //分库设置
-        Map<String, DataSource> dataSourceMap = new HashMap<>(2);
+        Map<String, DataSource> dataSourceMap = new HashMap<>(4);
         //添加两个数据库database0和database1
         dataSourceMap.put(database0Config.getDatabaseName(), database0Config.createDataSource());
         dataSourceMap.put(database1Config.getDatabaseName(), database1Config.createDataSource());
+        dataSourceMap.put(database3Config.getDatabaseName(), database3Config.createDataSource());
+        dataSourceMap.put(database4Config.getDatabaseName(), database4Config.createDataSource());
         //设置默认数据库
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, database0Config.getDatabaseName());
 
